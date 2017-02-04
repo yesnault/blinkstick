@@ -3,6 +3,13 @@ language: go
 go:
 - 1.7.x
 
+os:
+  - linux
+  - osx
+
+sudo: required
+dist: trusty
+
 env:
   global:
   - PROJECT_NAME="blinkstick"
@@ -10,7 +17,30 @@ env:
 
 install: true
 
-script: chmod +x package.sh && ./package.sh
+cache:
+  directories:
+    - libusb-1.0.20
+
+script:
+  -  echo "working on $TRAVIS_OS_NAME"
+  -  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      sudo apt-get update && sudo apt-get install -qq libusb-1.0-0-dev ;
+      cd cli/blink;
+      architecture="linux-amd64";
+      echo "Building ${architecture}";
+      export GOOS="linux";
+      export GOARCH="amd64";
+      go build -ldflags "-X github.com/yesnault/blinkstick/cli/blink/update.architecture=${architecture}" -o bin/blink-${architecture};
+    fi;
+  -  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      cd cli/blink;
+      architecture="darwin-amd64";
+      echo "Building ${architecture}";
+      export GOOS="darwin";
+      export GOARCH="amd64";
+      go build -ldflags "-X github.com/yesnault/blinkstick/cli/blink/update.architecture=${architecture}" -o bin/blink-${architecture};
+    fi;
+  -  pwd && ls -lart bin
 
 before_deploy:
   - gem install mime-types -v 2.6.2
@@ -20,15 +50,8 @@ deploy:
   api_key:
     secure: n87yxPY9WCVoquwIiLCF89bfi17W3BX+ItkFsdB4q2DUiQ2R4BaecICyyzqfk4OsOg3uvP0N+XLXKVtA7gxo5I54Opkdnhbnbtn8I8xKQh/cYNd4WQ8HZKez3o8kGNJZHDoRdDCrfOmSqMf772bcDPaEzxWt/+R42bTFSK43TYdm3GYg9UKo6TX+HeCg0lGx/o838wZKbsztFtofDFceC+7vUMNp4XPqg9ATED8mZJugszNKmBxTyH2YJ9GTrn1sBjZ84qBNN09lVS7XxIYsGPLlioZqGgU3M3TvD55gHamf8Sl1z7HIeFeBoVo/+gkSSYXvFroNSe2JRH3hjYc3cSsH3XoKa+wU/SOaBHSNATp/TNSJkeL48grRvCY+Lyazh9NElDoc2Tnm4rMzXl2sN/LRFAzlxBt03yrUKssCXYRQ2GZ7DciIasVZE4AFP3KHCffk79fzN2PTZx0ODX4ySKNddF7P450M07mFFySLVnWfia8XTKxdfmOhpXWfw+PFLhbq9WDfQ7NvVNW+Jl9Iuh6JxVcBtv2sufiA8kiybKRQZwJ19GPIgSZ59lkKNrMhBiBOYkFB6JQ2NupcPf0uxln5c9dnqtHsOr4RPtfUXY81M1lkDchsv0paNvRfpjB2Y5br+SnTpmXCFShhSo8TujW0SNy0qNWi38KFSc6SbTg=
   file:
-    - cli/blink/bin/blink-darwin-386
     - cli/blink/bin/blink-darwin-amd64
-    - cli/blink/bin/blink-freebsd-386
-    - cli/blink/bin/blink-freebsd-amd64
-    - cli/blink/bin/blink-linux-386
     - cli/blink/bin/blink-linux-amd64
-    - cli/blink/bin/blink-linux-arm
-    - cli/blink/bin/blink-windows-386
-    - cli/blink/bin/blink-windows-amd64
   on:
     tags: true
     repo: yesnault/blinkstick
