@@ -45,7 +45,7 @@ deploy:
   - provider: releases
     api_key:
       secure: bBkv6Ph7RPrwSQfTd5367F2v5Y9aXVdpoY5tGW/YGAoj7uMqyvuocrKDNx8pJfRQNFmVfEGOqVZ3KajsX0nisljUAZ+j98MpNtgYtOKd484uD167DQmLlrXTgHUdhmxct8h8+ss32NuffSDIjUyABx+aTiWbKVUHodFfQbCF1YK58zY25lRH5vRA5Qlc9WU70uVMyNFw8HAyfKU3K97tvydBEHaMKomV+fOHA1D1AyYxI12EH6SjPgwzZQIbsRtGcu6AjVPBlH5bfAoWWJhR7IVOYu7EEZx7UBVfPD1ONzzraFJWdu9/AM11XQBvW3i98fO1l9vo3rdrCksMaJxDQ7PVyXlabaGTLpAR8ze9orBIjSxLn7yocCzHiFM1tVWnu4UQL94vx+WXpPf0iMnd1CwliHItDOzfVfE8O7eGhz4ulMdYxzVY7JFaSIsQ3VBDP9AbndQS712WiVGeQmeccbhypSqyi61b769X8FKQp2Q2EIcNUWGHUgPL657UmcLAlYlT45nQGtH9Z+JIVnHXUcHCesEosUHryNviTYLH/KnbFLjztqv+AXAO38gJM7zcycDffc7dwKlH8EyRHB6lEmcO/pa51umXEbnxiad4KaVAg6JzTVcHBjmGnCH5dedaP0CysEZ8gV85EYfw1y8VJBm7q8v7w/JwsKE8S83srtE=
-    file: "cli/blink/bin/blink-linux-amd64"
+    file: "/home/travis/gopath/src/github.com/yesnault/blinkstick/cli/blink/bin/blink-linux-amd64"
     skip_cleanup: true
     on:
       condition: "$TRAVIS_OS_NAME = linux"
@@ -54,7 +54,7 @@ deploy:
   - provider: releases
     api_key:
       secure: bBkv6Ph7RPrwSQfTd5367F2v5Y9aXVdpoY5tGW/YGAoj7uMqyvuocrKDNx8pJfRQNFmVfEGOqVZ3KajsX0nisljUAZ+j98MpNtgYtOKd484uD167DQmLlrXTgHUdhmxct8h8+ss32NuffSDIjUyABx+aTiWbKVUHodFfQbCF1YK58zY25lRH5vRA5Qlc9WU70uVMyNFw8HAyfKU3K97tvydBEHaMKomV+fOHA1D1AyYxI12EH6SjPgwzZQIbsRtGcu6AjVPBlH5bfAoWWJhR7IVOYu7EEZx7UBVfPD1ONzzraFJWdu9/AM11XQBvW3i98fO1l9vo3rdrCksMaJxDQ7PVyXlabaGTLpAR8ze9orBIjSxLn7yocCzHiFM1tVWnu4UQL94vx+WXpPf0iMnd1CwliHItDOzfVfE8O7eGhz4ulMdYxzVY7JFaSIsQ3VBDP9AbndQS712WiVGeQmeccbhypSqyi61b769X8FKQp2Q2EIcNUWGHUgPL657UmcLAlYlT45nQGtH9Z+JIVnHXUcHCesEosUHryNviTYLH/KnbFLjztqv+AXAO38gJM7zcycDffc7dwKlH8EyRHB6lEmcO/pa51umXEbnxiad4KaVAg6JzTVcHBjmGnCH5dedaP0CysEZ8gV85EYfw1y8VJBm7q8v7w/JwsKE8S83srtE=
-    file: "cli/blink/bin/blink-darwin-amd64"
+    file: "/home/travis/gopath/src/github.com/yesnault/blinkstick/cli/blink/bin/blink-darwin-amd64"
     skip_cleanup: true
     on:
       condition: "$TRAVIS_OS_NAME = osx"
