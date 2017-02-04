@@ -17,10 +17,6 @@ env:
 
 install: true
 
-cache:
-  directories:
-    - libusb-1.0.20
-
 script:
   -  echo "working on $TRAVIS_OS_NAME"
   -  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -51,7 +47,7 @@ deploy:
     secure: n87yxPY9WCVoquwIiLCF89bfi17W3BX+ItkFsdB4q2DUiQ2R4BaecICyyzqfk4OsOg3uvP0N+XLXKVtA7gxo5I54Opkdnhbnbtn8I8xKQh/cYNd4WQ8HZKez3o8kGNJZHDoRdDCrfOmSqMf772bcDPaEzxWt/+R42bTFSK43TYdm3GYg9UKo6TX+HeCg0lGx/o838wZKbsztFtofDFceC+7vUMNp4XPqg9ATED8mZJugszNKmBxTyH2YJ9GTrn1sBjZ84qBNN09lVS7XxIYsGPLlioZqGgU3M3TvD55gHamf8Sl1z7HIeFeBoVo/+gkSSYXvFroNSe2JRH3hjYc3cSsH3XoKa+wU/SOaBHSNATp/TNSJkeL48grRvCY+Lyazh9NElDoc2Tnm4rMzXl2sN/LRFAzlxBt03yrUKssCXYRQ2GZ7DciIasVZE4AFP3KHCffk79fzN2PTZx0ODX4ySKNddF7P450M07mFFySLVnWfia8XTKxdfmOhpXWfw+PFLhbq9WDfQ7NvVNW+Jl9Iuh6JxVcBtv2sufiA8kiybKRQZwJ19GPIgSZ59lkKNrMhBiBOYkFB6JQ2NupcPf0uxln5c9dnqtHsOr4RPtfUXY81M1lkDchsv0paNvRfpjB2Y5br+SnTpmXCFShhSo8TujW0SNy0qNWi38KFSc6SbTg=
   file:
     - cli/blink/bin/blink-${GOOS)-amd64
-    
+
   on:
     tags: true
     repo: yesnault/blinkstick
