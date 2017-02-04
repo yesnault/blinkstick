@@ -1,11 +1,15 @@
 language: go
+
 go:
-- 1.7
+- 1.7.x
+
 env:
   global:
   - PROJECT_NAME="blinkstick"
   - PROJECT_PATH="github.com/yesnault"
+
 install: true
+
 script: chmod +x package.sh && ./package.sh
 
 before_deploy:
