@@ -1,0 +1,30 @@
+language: go
+go:
+- 1.7
+env:
+  global:
+  - PROJECT_NAME="blinkstick"
+  - PROJECT_PATH="github.com/yesnault"
+install: true
+
+script: chmod +x package.sh && ./package.sh
+
+before_deploy:
+  - gem install mime-types -v 2.6.2
+
+deploy:
+  provider: releases
+  api_key:
+    secure:
+  file:
+    - cli/blink/bin/blink-darwin-386
+    - cli/blink/bin/blink-darwin-amd64
+    - cli/blink/bin/blink-freebsd-386
+    - cli/blink/bin/blink-freebsd-amd64
+    - cli/blink/bin/blink-linux-386
+    - cli/blink/bin/blink-linux-amd64
+    - cli/blink/bin/blink-linux-arm
+    - cli/blink/bin/blink-windows-386
+    - cli/blink/bin/blink-windows-amd64
+  on:
+    tags: true
