@@ -11,6 +11,7 @@ SDK and CLI for [BlinkStick](https://www.blinkstick.com/)
 ## Supported device
 
 * Blinckstick Nano
+* Blinckstick Strip
 
 # Hacking
 
