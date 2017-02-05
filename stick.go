@@ -30,10 +30,16 @@ func (strip Strip) List() []Blinkstick {
 // SetColor set color for all led on current Blinkstick strip
 func (strip Strip) SetColor(color color.Color) error {
 	for index := 0; index < 8; index++ {
-		if err := strip.usbDevice.setColor(byte(index), color); err != nil {
-			return err
-		}
-		time.Sleep(1 * time.Millisecond)
+		strip.SetColorOnLed(color, index)
 	}
+	return nil
+}
+
+// SetColorOnLed set color on a led
+func (strip Strip) SetColorOnLed(color color.Color, index int) error {
+	if err := strip.usbDevice.setColor(byte(index), color); err != nil {
+		return err
+	}
+	time.Sleep(1 * time.Millisecond)
 	return nil
 }

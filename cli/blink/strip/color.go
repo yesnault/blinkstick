@@ -12,12 +12,14 @@ import (
 var (
 	serial     string
 	gcolor     string
+	leds       []int
 	brightness int
 )
 
 func init() {
 	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "color", "", "", "Color for top and bottom led")
 	cmdStripColor.PersistentFlags().IntVarP(&brightness, "brightness", "", 10, "Limit the brightness of the color 0..100")
+	cmdStripColor.PersistentFlags().IntSliceVarP(&leds, "led", "", []int{}, "Led to manipulate: 0..7. If unspecified, action will be performed on all leds")
 	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "serial", "", "", "Select device by serial number. If unspecified, action will be performed on all BlinkSticks Nano")
 }
 
@@ -28,6 +30,9 @@ var cmdStripColor = &cobra.Command{
 
 Set the same color for all leds with 50% brightness :
   blink strip color --color orange --brightness 50
+
+Color led 0 and 7
+ blink strip color red --led 0 --led 7
 
 Turn off light:
   blink strip color --color black
@@ -54,7 +59,15 @@ Turn off light:
 		for _, d := range devices {
 			if serial == "" || d.GetDeviceInfo().SerialNumber == serial {
 				if gcolor != "" {
-					internal.Check(d.SetColor(colorColor))
+					if len(leds) == 0 {
+						internal.Check(d.SetColor(colorColor))
+					}
+					for _, index := range leds {
+						if index < 0 || index > 7 {
+							continue
+						}
+						internal.Check(d.(blinkstick.Strip).SetColorOnLed(colorColor, index))
+					}
 				}
 			}
 		}
