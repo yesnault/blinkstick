@@ -12,4 +12,7 @@ func init() {
 var Cmd = &cobra.Command{
 	Use:   "color",
 	Short: "Color list",
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Help()
+	},
 }

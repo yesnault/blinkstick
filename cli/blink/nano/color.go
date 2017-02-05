@@ -26,14 +26,14 @@ var cmdNanoColor = &cobra.Command{
 	Short: "Color a blinkstick nano",
 	Long: `Color a blinkstick nano:
 
-Set the same color for both led:
-  blink nano color --color orange
+Set the same color for both led with 50% brightness :
+  blink nano color --color orange --brightness 50
 
 Set a color for bottom Led and another for top Led:
   blink nano color --bottom red --top green
 
 Turn off light:
-	blink nano color --color black
+  blink nano color --color black
 
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
