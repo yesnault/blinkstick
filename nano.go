@@ -46,7 +46,7 @@ func (nano Nano) Blink(color color.Color, duration, times int) error {
 	if err := SetBlinkOnLed(nano, color, 0, duration, times); err != nil {
 		return err
 	}
-	return SetBlinkOnLed(nano, color, 0, duration, times)
+	return SetBlinkOnLed(nano, color, 1, duration, times)
 }
 
 // SetColorTop set color for led on top on current Blinkstick nano

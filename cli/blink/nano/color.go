@@ -14,9 +14,9 @@ var (
 	bottom     string
 	brightness int
 	serial     string
-	blink      int
+	blink      bool
 	duration   int
-	delay      int
+	repeats    int
 )
 
 func init() {
@@ -24,8 +24,9 @@ func init() {
 	cmdNanoColor.PersistentFlags().StringVarP(&bottom, "bottom", "", "", "Color for botton led")
 	cmdNanoColor.PersistentFlags().IntVarP(&brightness, "brightness", "", 1, "Limit the brightness of the color 0..100")
 	cmdNanoColor.PersistentFlags().StringVarP(&serial, "serial", "", "", "Select device by serial number. If unspecified, action will be performed on all BlinkSticks Strip")
-	cmdNanoColor.PersistentFlags().IntVarP(&blink, "blink", "", 0, "Blink LED --blink <ntimes> : --blink 1 for one time blinking")
+	cmdNanoColor.PersistentFlags().BoolVarP(&blink, "blink", "", false, "Blink LED")
 	cmdNanoColor.PersistentFlags().IntVarP(&duration, "duration", "", 100, "Set duration of transition in milliseconds (use with --blink)")
+	cmdNanoColor.PersistentFlags().IntVarP(&repeats, "repeats", "", 10, "Number of repetitions (use with --blink)")
 }
 
 var cmdNanoColor = &cobra.Command{
@@ -72,18 +73,18 @@ Turn off light:
 		for _, d := range devices {
 			if serial == "" || d.GetDeviceInfo().SerialNumber == serial {
 				if gcolor != "" {
-					if blink > 0 {
-						internal.Check(d.Blink(colorColor, duration, blink))
+					if blink {
+						internal.Check(d.Blink(colorColor, duration, repeats))
 					} else {
 						internal.Check(d.SetColor(colorColor))
 					}
 				}
-				if blink > 0 {
+				if blink {
 					if top != "" {
-						internal.Check(blinkstick.SetBlinkOnLed(d, colorTop, 0, duration, blink))
+						internal.Check(blinkstick.SetBlinkOnLed(d, colorTop, 0, duration, repeats))
 					}
 					if bottom != "" {
-						internal.Check(blinkstick.SetBlinkOnLed(d, colorBottom, 1, duration, blink))
+						internal.Check(blinkstick.SetBlinkOnLed(d, colorBottom, 1, duration, repeats))
 					}
 				} else {
 					if top != "" {
