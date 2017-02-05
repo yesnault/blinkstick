@@ -111,10 +111,22 @@
 			"revisionTime": "2017-01-13T09:48:12Z"
 		},
 		{
+			"checksumSHA1": "yf185lmVPcvXjLZuPT1s4JzxI18=",
+			"path": "github.com/mattn/go-runewidth",
+			"revision": "737072b4e32b7a5018b4a7125da8d12de90e8045",
+			"revisionTime": "2016-10-12T01:35:12Z"
+		},
+		{
 			"checksumSHA1": "0lYe+0oPjhUOecK2xxOsDJuxbK4=",
 			"path": "github.com/mitchellh/mapstructure",
 			"revision": "ed105d635dfa9ea7133f7c79f1eb36203fc3a156",
 			"revisionTime": "2017-01-18T00:13:03Z"
+		},
+		{
+			"checksumSHA1": "4+01HaD0/pVQLzk7nWmoJwolfrY=",
+			"path": "github.com/olekukonko/tablewriter",
+			"revision": "44e365d423f4f06769182abfeeae2b91be9d529b",
+			"revisionTime": "2016-12-29T08:21:16Z"
 		},
 		{
 			"checksumSHA1": "8Y05Pz7onrQPcVWW6JStSsYRh6E=",
