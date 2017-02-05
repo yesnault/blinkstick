@@ -186,7 +186,7 @@ func resolveDescriptors(dev *C.libusb_device, iManufacturer C.uint8_t, iProduct 
 	var handle *C.libusb_device_handle
 	err := C.libusb_open(dev, &handle)
 	if err != 0 {
-		return "", "", usbError(err)
+		return "", "", "", usbError(err)
 	}
 	if handle != nil {
 		defer C.libusb_close(handle)
