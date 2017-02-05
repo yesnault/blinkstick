@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/boombuler/hid"
+	"github.com/yesnault/hid"
 )
 
 // Nano represents a BlinkStick Nano https://www.blinkstick.com/products/blinkstick-nano

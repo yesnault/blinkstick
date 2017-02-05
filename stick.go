@@ -4,7 +4,7 @@ import (
 	"image/color"
 	"time"
 
-	"github.com/boombuler/hid"
+	"github.com/yesnault/hid"
 )
 
 // Strip represents a BlinkStrip Strip https://www.blinkstick.com/products/blinkstick-strip

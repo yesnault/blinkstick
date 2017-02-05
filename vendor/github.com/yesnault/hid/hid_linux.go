@@ -160,7 +160,7 @@ func newDeviceInfo(dev *C.libusb_device) (*DeviceInfo, error) {
 	if err := C.libusb_get_device_descriptor(dev, &desc); err < 0 {
 		return nil, usbError(err)
 	}
-	manufacturer, product, err := resolveDescriptors(dev, desc.iManufacturer, desc.iProduct)
+	manufacturer, product, serialNumber, err := resolveDescriptors(dev, desc.iManufacturer, desc.iProduct, desc.iSerialNumber)
 	if err == usbError(C.LIBUSB_ERROR_ACCESS) {
 		manufacturer = "access not allowed"
 		product = "access not allowed"
@@ -178,10 +178,11 @@ func newDeviceInfo(dev *C.libusb_device) (*DeviceInfo, error) {
 		VersionNumber: uint16(desc.bcdDevice),
 		Manufacturer:  manufacturer,
 		Product:       product,
+		SerialNumber:  serialNumber,
 	}, nil
 }
 
-func resolveDescriptors(dev *C.libusb_device, iManufacturer C.uint8_t, iProduct C.uint8_t) (manufacturer string, product string, e error) {
+func resolveDescriptors(dev *C.libusb_device, iManufacturer C.uint8_t, iProduct C.uint8_t, iSerialNumber C.uint8_t) (manufacturer string, product string, serialNumber string, e error) {
 	var handle *C.libusb_device_handle
 	err := C.libusb_open(dev, &handle)
 	if err != 0 {
@@ -191,15 +192,19 @@ func resolveDescriptors(dev *C.libusb_device, iManufacturer C.uint8_t, iProduct 
 		defer C.libusb_close(handle)
 		manufacturerStr, err := getStringDescriptor(handle, iManufacturer)
 		if err != nil {
-			return "", "", err
+			return "", "", "", err
 		}
 		productStr, err := getStringDescriptor(handle, iProduct)
 		if err != nil {
-			return "", "", err
+			return "", "", "", err
 		}
-		return manufacturerStr, productStr, nil
+		serialNumberStr, err := getStringDescriptor(handle, iSerialNumber)
+		if err != nil {
+			return "", "", "", err
+		}
+		return manufacturerStr, productStr, serialNumberStr, nil
 	}
-	return "", "", errors.New("Couldn't resolve description string")
+	return "", "", "", errors.New("Couldn't resolve description string")
 
 }
 

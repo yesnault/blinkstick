@@ -218,6 +218,7 @@ func iterateDevices(action func(device C.IOHIDDeviceRef) bool) cleanupDeviceMana
 	}
 }
 
+// Devices returns all devices
 func Devices() <-chan *DeviceInfo {
 	result := make(chan *DeviceInfo)
 	go func() {
@@ -228,6 +229,7 @@ func Devices() <-chan *DeviceInfo {
 				VersionNumber:       uint16(getIntProp(device, cfstring(C.kIOHIDVersionNumberKey))),
 				Manufacturer:        getStringProp(device, cfstring(C.kIOHIDManufacturerKey)),
 				Product:             getStringProp(device, cfstring(C.kIOHIDProductKey)),
+				SerialNumber:        getStringProp(device, cfstring(C.kIOHIDSerialNumberKey)),
 				InputReportLength:   uint16(getIntProp(device, cfstring(C.kIOHIDMaxInputReportSizeKey))),
 				OutputReportLength:  uint16(getIntProp(device, cfstring(C.kIOHIDMaxOutputReportSizeKey))),
 				FeatureReportLength: uint16(getIntProp(device, cfstring(C.kIOHIDMaxFeatureReportSizeKey))),
@@ -297,7 +299,7 @@ func (dev *osxDevice) Close() {
 }
 
 func (dev *osxDevice) setReport(typ C.IOHIDReportType, data []byte) error {
-	var reportNo int32 = int32(data[0])
+	reportNo := int32(data[0])
 	if reportNo == 0 {
 		data = data[1:]
 	}
@@ -307,9 +309,8 @@ func (dev *osxDevice) setReport(typ C.IOHIDReportType, data []byte) error {
 
 		if res == C.kIOReturnSuccess {
 			return nil
-		} else {
-			return ioReturnToErr(res)
 		}
+		return ioReturnToErr(res)
 	}
 
 	return errors.New("device disconnected")

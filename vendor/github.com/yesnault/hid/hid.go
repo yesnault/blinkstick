@@ -19,6 +19,8 @@ type DeviceInfo struct {
 	Manufacturer string
 	// Product contains the product name of the device
 	Product string
+	// SerialNumber contains the Serial Number of the device
+	SerialNumber string
 
 	InputReportLength   uint16
 	OutputReportLength  uint16

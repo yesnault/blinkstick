@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"image/color"
 
-	"github.com/boombuler/hid"
+	"github.com/yesnault/hid"
 )
 
 // Version of Blinkstick
@@ -68,6 +68,7 @@ func List(opts ...ListFilter) []Blinkstick {
 
 	for di := range hid.Devices() {
 		if di.VendorId == vendorID && di.ProductId == productID {
+			//			fmt.Printf("di: %+v", di)
 			for _, o := range opts {
 				if toKeep, blinkstick := o(di); toKeep {
 					out = append(out, blinkstick)
