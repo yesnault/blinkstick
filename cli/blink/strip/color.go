@@ -9,12 +9,16 @@ import (
 	"github.com/yesnault/blinkstick/cli/blink/internal"
 )
 
-var gcolor string
-var brightness int
+var (
+	serial     string
+	gcolor     string
+	brightness int
+)
 
 func init() {
 	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "color", "", "", "Color for top and bottom led")
 	cmdStripColor.PersistentFlags().IntVarP(&brightness, "brightness", "", 10, "Limit the brightness of the color 0..100")
+	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "serial", "", "", "Select device by serial number. If unspecified, action will be performed on all BlinkSticks Nano")
 }
 
 var cmdStripColor = &cobra.Command{
@@ -48,8 +52,10 @@ Turn off light:
 		b := blinkstick.Strip{}
 		devices := b.List()
 		for _, d := range devices {
-			if gcolor != "" {
-				internal.Check(d.SetColor(colorColor))
+			if serial == "" || d.GetDeviceInfo().SerialNumber == serial {
+				if gcolor != "" {
+					internal.Check(d.SetColor(colorColor))
+				}
 			}
 		}
 

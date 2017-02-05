@@ -37,5 +37,4 @@ func DisplayDevices(devices []blinkstick.Blinkstick) {
 		})
 	}
 	table.Render() // Send output
-
 }
