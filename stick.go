@@ -2,19 +2,22 @@ package blinkstick
 
 import (
 	"image/color"
-	"time"
 
 	"github.com/yesnault/hid"
 )
 
 // Strip represents a BlinkStrip Strip https://www.blinkstick.com/products/blinkstick-strip
 type Strip struct {
-	usbDevice usbDevice
+	usbDevice *usbDevice
+}
+
+func (strip Strip) getUSBDevice() *usbDevice {
+	return strip.usbDevice
 }
 
 // ListFilter used for filter List Device
 func (strip Strip) ListFilter(hid *hid.DeviceInfo) (bool, Blinkstick) {
-	return hid.Product == "BlinkStick", Strip{usbDevice: usbDevice{DeviceInfo: hid}}
+	return hid.Product == "BlinkStick", Strip{usbDevice: &usbDevice{DeviceInfo: hid}}
 }
 
 // GetDeviceInfo returns device info
@@ -27,19 +30,20 @@ func (strip Strip) List() []Blinkstick {
 	return List(strip.ListFilter)
 }
 
-// SetColor set color for all led on current Blinkstick strip
-func (strip Strip) SetColor(color color.Color) error {
+// Blink blink color for all led on current Blinkstick strip
+func (strip Strip) Blink(color color.Color, duration, times int) error {
 	for index := 0; index < 8; index++ {
-		strip.SetColorOnLed(color, index)
+		if err := SetBlinkOnLed(strip, color, index, duration, times); err != nil {
+			return err
+		}
 	}
 	return nil
 }
 
-// SetColorOnLed set color on a led
-func (strip Strip) SetColorOnLed(color color.Color, index int) error {
-	if err := strip.usbDevice.setColor(byte(index), color); err != nil {
-		return err
+// SetColor set color for all led on current Blinkstick strip
+func (strip Strip) SetColor(color color.Color) error {
+	for index := 0; index < 8; index++ {
+		SetColorOnLed(strip, color, index)
 	}
-	time.Sleep(1 * time.Millisecond)
 	return nil
 }

@@ -10,13 +10,17 @@ import (
 
 // Nano represents a BlinkStick Nano https://www.blinkstick.com/products/blinkstick-nano
 type Nano struct {
-	usbDevice usbDevice
+	usbDevice *usbDevice
+}
+
+func (nano Nano) getUSBDevice() *usbDevice {
+	return nano.usbDevice
 }
 
 // ListFilter used for filter List Device
 func (nano Nano) ListFilter(hid *hid.DeviceInfo) (bool, Blinkstick) {
 	contains := strings.HasPrefix(hid.Product, "BlinkStick Nano")
-	return contains, Nano{usbDevice: usbDevice{DeviceInfo: hid}}
+	return contains, Nano{usbDevice: &usbDevice{DeviceInfo: hid}}
 }
 
 // GetDeviceInfo returns device info
@@ -37,9 +41,17 @@ func (nano Nano) SetColor(color color.Color) error {
 	return nano.SetColorBottom(color)
 }
 
+// Blink blink color for all led on current Blinkstick nano
+func (nano Nano) Blink(color color.Color, duration, times int) error {
+	if err := SetBlinkOnLed(nano, color, 0, duration, times); err != nil {
+		return err
+	}
+	return SetBlinkOnLed(nano, color, 0, duration, times)
+}
+
 // SetColorTop set color for led on top on current Blinkstick nano
 func (nano Nano) SetColorTop(color color.Color) error {
-	if err := nano.usbDevice.setColor(0, color); err != nil {
+	if err := SetColorOnLed(nano, color, 0); err != nil {
 		return err
 	}
 	time.Sleep(100 * time.Millisecond)
@@ -48,7 +60,7 @@ func (nano Nano) SetColorTop(color color.Color) error {
 
 // SetColorBottom set color for bottom on top on current Blinkstick nano
 func (nano Nano) SetColorBottom(color color.Color) error {
-	if err := nano.usbDevice.setColor(1, color); err != nil {
+	if err := SetColorOnLed(nano, color, 1); err != nil {
 		return err
 	}
 	time.Sleep(100 * time.Millisecond)

@@ -28,12 +28,14 @@ type usbDevice struct {
 type Blinkstick interface {
 	List() []Blinkstick
 	SetColor(color.Color) error
+	Blink(color.Color, int, int) error
 	GetDeviceInfo() *hid.DeviceInfo
 	ListFilter(hid *hid.DeviceInfo) (bool, Blinkstick)
+	getUSBDevice() *usbDevice
 }
 
 // SetColor set color
-func (usbDevice *usbDevice) setColor(index byte, c color.Color) error {
+func (usbDevice *usbDevice) setColor(c color.Color, index byte) error {
 	if usbDevice.Device == nil {
 		if err := usbDevice.Open(); err != nil {
 			return err

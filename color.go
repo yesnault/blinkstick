@@ -3,6 +3,7 @@ package blinkstick
 import (
 	"fmt"
 	"image/color"
+	"time"
 
 	"golang.org/x/image/colornames"
 )
@@ -54,4 +55,28 @@ func remapColor(value uint8, max int) uint8 {
 	limit := float64(max) / 100 * 255
 	r := remap(float64(value), 0, 255, 0, limit)
 	return r
+}
+
+// SetBlinkOnLed color with given duration and times
+func SetBlinkOnLed(blinkstick Blinkstick, col color.Color, index int, duration int, times int) error {
+	for i := 0; i < times; i++ {
+		time.Sleep(time.Duration(duration) * time.Millisecond)
+		if err := blinkstick.getUSBDevice().setColor(col, byte(index)); err != nil {
+			return err
+		}
+		time.Sleep(time.Duration(duration) * time.Millisecond)
+		if err := blinkstick.getUSBDevice().setColor(color.RGBA{R: 0, G: 0, B: 0}, byte(index)); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// SetColorOnLed set color on a led
+func SetColorOnLed(blinkstick Blinkstick, color color.Color, index int) error {
+	if err := blinkstick.getUSBDevice().setColor(color, byte(index)); err != nil {
+		return err
+	}
+	time.Sleep(1 * time.Millisecond)
+	return nil
 }
