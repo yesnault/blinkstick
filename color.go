@@ -52,10 +52,6 @@ func remap(value float64, leftMin, leftMax, rightMin, rightMax float64) uint8 {
 
 func remapColor(value uint8, max int) uint8 {
 	limit := float64(max) / 100 * 255
-
 	r := remap(float64(value), 0, 255, 0, limit)
-
-	fmt.Printf("value:%v max:%v limit:%v remap:%v \n", value, max, limit, r)
-
 	return r
 }

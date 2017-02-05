@@ -9,21 +9,19 @@ import (
 	"github.com/yesnault/blinkstick/cli/blink/internal"
 )
 
-var gcolor string
 var top string
 var bottom string
 var brightness int
 
 func init() {
-	cmdNanoColor.PersistentFlags().StringVarP(&gcolor, "color", "", "", "Color for top and bottom led")
 	cmdNanoColor.PersistentFlags().StringVarP(&top, "top", "", "", "Color for top led")
 	cmdNanoColor.PersistentFlags().StringVarP(&bottom, "bottom", "", "", "Color for botton led")
-	cmdNanoColor.PersistentFlags().IntVarP(&brightness, "brightness", "", 10, "Limit the brightness of the color 0..100")
+	cmdNanoColor.PersistentFlags().IntVarP(&brightness, "brightness", "", 1, "Limit the brightness of the color 0..100")
 }
 
 var cmdNanoColor = &cobra.Command{
 	Use:   "color",
-	Short: "Color a blinkstick nano",
+	Short: "Color a blinkstick nano: blink nano color <color> [--brightness 1]",
 	Long: `Color a blinkstick nano:
 
 Set the same color for both led with 50% brightness :
@@ -38,10 +36,11 @@ Turn off light:
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		if gcolor == "" && top == "" && bottom == "" {
+		if (len(args) == 0 || args[0] == "") && top == "" && bottom == "" {
 			cmd.Help()
 			return
 		}
+		gcolor := args[0]
 
 		var colorColor, colorTop, colorBottom color.Color
 		var err error

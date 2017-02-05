@@ -8,6 +8,7 @@ import (
 	"github.com/yesnault/blinkstick/cli/blink/color"
 	"github.com/yesnault/blinkstick/cli/blink/device"
 	"github.com/yesnault/blinkstick/cli/blink/nano"
+	"github.com/yesnault/blinkstick/cli/blink/strip"
 	"github.com/yesnault/blinkstick/cli/blink/update"
 	"github.com/yesnault/blinkstick/cli/blink/version"
 )
@@ -48,6 +49,7 @@ func addCommands() {
 	rootCmd.AddCommand(color.Cmd)
 	rootCmd.AddCommand(device.Cmd)
 	rootCmd.AddCommand(nano.Cmd)
+	rootCmd.AddCommand(strip.Cmd)
 	rootCmd.AddCommand(update.Cmd)
 	rootCmd.AddCommand(version.Cmd)
 

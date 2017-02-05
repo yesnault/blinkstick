@@ -42,7 +42,7 @@ func (nano Nano) SetColorTop(color color.Color) error {
 	if err := nano.usbDevice.setColor(0, color); err != nil {
 		return err
 	}
-	time.Sleep(1 * time.Millisecond)
+	time.Sleep(100 * time.Millisecond)
 	return nil
 }
 
@@ -51,6 +51,6 @@ func (nano Nano) SetColorBottom(color color.Color) error {
 	if err := nano.usbDevice.setColor(1, color); err != nil {
 		return err
 	}
-	time.Sleep(1 * time.Millisecond)
+	time.Sleep(100 * time.Millisecond)
 	return nil
 }
