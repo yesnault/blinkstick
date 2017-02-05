@@ -20,7 +20,7 @@ var (
 )
 
 func init() {
-	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "color", "", "", "Color for top and bottom led")
+	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "color", "", "", "Color for top and bottom led: blink strip color red")
 	cmdStripColor.PersistentFlags().IntVarP(&brightness, "brightness", "", 10, "Limit the brightness of the color 0..100")
 	cmdStripColor.PersistentFlags().IntSliceVarP(&leds, "led", "", []int{}, "Led to manipulate: 0..7. If unspecified, action will be performed on all leds")
 	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "serial", "", "", "Select device by serial number. If unspecified, action will be performed on all BlinkSticks Nano")
@@ -35,13 +35,13 @@ var cmdStripColor = &cobra.Command{
 	Long: `Color a blinkstick strip:
 
 Set the same color for all leds with 50% brightness :
-  blink strip color --color orange --brightness 50
+  blink strip color orange --brightness 50
 
 Color led 0 and 7
  blink strip color red --led 0 --led 7
 
 Turn off light:
-  blink strip color --color black
+  blink strip color black
 
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
