@@ -50,7 +50,10 @@ Turn off light:
 			cmd.Help()
 			return
 		}
-		gcolor := args[0]
+		gcolor := ""
+		if len(args) > 0 {
+			gcolor = args[0]
+		}
 
 		var colorColor, colorTop, colorBottom color.Color
 		var err error
