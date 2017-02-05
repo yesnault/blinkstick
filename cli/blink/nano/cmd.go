@@ -13,4 +13,7 @@ func init() {
 var Cmd = &cobra.Command{
 	Use:   "nano",
 	Short: "nano <command>",
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Help()
+	},
 }

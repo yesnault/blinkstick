@@ -8,16 +8,15 @@ import (
 	"github.com/boombuler/hid"
 )
 
-// Nano ...
+// Nano represents a BlinkStick Nano https://www.blinkstick.com/products/blinkstick-nano
 type Nano struct {
-	usbDevice USBDevice
+	usbDevice usbDevice
 }
 
 // ListFilter used for filter List Device
 func (nano Nano) ListFilter(hid *hid.DeviceInfo) (bool, Blinkstick) {
 	contains := strings.HasPrefix(hid.Product, "BlinkStick Nano")
-	usbDevice := USBDevice{DeviceInfo: hid}
-	return contains, Nano{usbDevice: usbDevice}
+	return contains, Nano{usbDevice: usbDevice{DeviceInfo: hid}}
 }
 
 // GetDeviceInfo returns device info

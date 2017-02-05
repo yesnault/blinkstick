@@ -12,14 +12,14 @@ import (
 // Keep "const Version on one line"
 const Version = "0.0.15"
 
-// VendorID blinkstick
-const VendorID = 0x20a0
+// vendorID blinkstick
+const vendorID = 0x20a0
 
-// ProductID blinkstick
-const ProductID = 0x41e5
+// productID blinkstick
+const productID = 0x41e5
 
-// USBDevice ...
-type USBDevice struct {
+// usbDevice ...
+type usbDevice struct {
 	DeviceInfo *hid.DeviceInfo
 	Device     *hid.Device
 }
@@ -33,7 +33,7 @@ type Blinkstick interface {
 }
 
 // SetColor set color
-func (usbDevice *USBDevice) setColor(index byte, c color.Color) error {
+func (usbDevice *usbDevice) setColor(index byte, c color.Color) error {
 	if usbDevice.Device == nil {
 		if err := usbDevice.Open(); err != nil {
 			return err
@@ -45,7 +45,7 @@ func (usbDevice *USBDevice) setColor(index byte, c color.Color) error {
 }
 
 // Open open a device
-func (usbDevice *USBDevice) Open() error {
+func (usbDevice *usbDevice) Open() error {
 	device, err := usbDevice.DeviceInfo.Open()
 	if err != nil {
 		return fmt.Errorf("Error while opening device: %s", err)
@@ -66,7 +66,7 @@ func List(opts ...ListFilter) []Blinkstick {
 	}
 
 	for di := range hid.Devices() {
-		if di.VendorId == VendorID && di.ProductId == ProductID {
+		if di.VendorId == vendorID && di.ProductId == productID {
 			for _, o := range opts {
 				if toKeep, blinkstick := o(di); toKeep {
 					out = append(out, blinkstick)
