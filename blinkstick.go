@@ -10,7 +10,7 @@ import (
 // Version of Blinkstick
 // One Line for this, used by release.sh script
 // Keep "const Version on one line"
-const Version = "0.1.4"
+const Version = "0.1.5"
 
 // vendorID blinkstick
 const vendorID = 0x20a0
