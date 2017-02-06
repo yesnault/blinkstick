@@ -31,7 +31,7 @@ func init() {
 
 var cmdNanoColor = &cobra.Command{
 	Use:   "color",
-	Short: "Color a blinkstick nano: blink nano color [<color>] [--brightness 1]",
+	Short: "Color a blinkstick nano: blink nano color [<color>] [--brightness=n] [--top=<color>] [--bottom=<color>] [--serial=s] [--duration=n] [--repeats=n] [--blink]",
 	Long: `Color a blinkstick nano:
 
 Set the same color for both led with 50% brightness :
@@ -39,6 +39,12 @@ Set the same color for both led with 50% brightness :
 
 Set a color for bottom Led and another for top Led:
   blink nano color --bottom red --top green
+
+Examples:
+ blink nano color --top purple --brightness 1
+ blink nano color --bottom red --brightness 100
+ blink nano color green --brightness 12
+ blink nano color --serial BS008173-3.0 --duration=500 --repeats=10 --brightness 30 --blink --bottom red
 
 Turn off light:
   blink nano color black

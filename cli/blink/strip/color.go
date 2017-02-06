@@ -23,7 +23,7 @@ func init() {
 	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "color", "", "", "Color for top and bottom led: blink strip color red")
 	cmdStripColor.PersistentFlags().IntVarP(&brightness, "brightness", "", 10, "Limit the brightness of the color 0..100")
 	cmdStripColor.PersistentFlags().IntSliceVarP(&leds, "led", "", []int{}, "Led to manipulate: 0..7. If unspecified, action will be performed on all leds")
-	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "serial", "", "", "Select device by serial number. If unspecified, action will be performed on all BlinkSticks Nano")
+	cmdStripColor.PersistentFlags().StringVarP(&gcolor, "serial", "", "", "Select device by serial number. If unspecified, action will be performed on all BlinkSticks Strip")
 	cmdStripColor.PersistentFlags().BoolVarP(&blink, "blink", "", false, "Blink LED")
 	cmdStripColor.PersistentFlags().IntVarP(&duration, "duration", "", 100, "Set duration of transition in milliseconds (use with --blink)")
 	cmdStripColor.PersistentFlags().IntVarP(&repeats, "repeats", "", 10, "Number of repetitions (use with --blink)")
@@ -31,17 +31,22 @@ func init() {
 
 var cmdStripColor = &cobra.Command{
 	Use:   "color",
-	Short: "Color a blinkstick strip",
+	Short: "Color a blinkstick strip: blink strip color [<color>] [--brightness=n] [--serial=s] [--duration=n] [--repeats=n] [--blink]",
 	Long: `Color a blinkstick strip:
 
 Set the same color for all leds with 50% brightness :
-  blink strip color orange --brightness 50
+  blink flex color orange --brightness 50
 
 Color led 0 and 7
- blink strip color red --led 0 --led 7
+ blink flex color red --led 0 --led 7
+
+Examples:
+ blink flex color powderblue
+ blink flex color powderblue --brightness 60 --blink --repeats 1
+ blink flex color ghostwhite --led 0 --led 2 --led 3 --led 5 --led 7
 
 Turn off light:
-  blink strip color black
+  blink flex color black
 
 	`,
 	Run: func(cmd *cobra.Command, args []string) {

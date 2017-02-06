@@ -11,7 +11,6 @@ import (
 
 var (
 	serial     string
-	gcolor     string
 	leds       []int
 	brightness int
 	blink      bool
@@ -20,10 +19,9 @@ var (
 )
 
 func init() {
-	cmdFlexColor.PersistentFlags().StringVarP(&gcolor, "color", "", "", "Color for top and bottom led: blink flex color red")
 	cmdFlexColor.PersistentFlags().IntVarP(&brightness, "brightness", "", 10, "Limit the brightness of the color 0..100")
 	cmdFlexColor.PersistentFlags().IntSliceVarP(&leds, "led", "", []int{}, "Led to manipulate: 0..7. If unspecified, action will be performed on all leds")
-	cmdFlexColor.PersistentFlags().StringVarP(&gcolor, "serial", "", "", "Select device by serial number. If unspecified, action will be performed on all BlinkSticks Nano")
+	cmdFlexColor.PersistentFlags().StringVarP(&serial, "serial", "", "", "Select device by serial number. If unspecified, action will be performed on all BlinkSticks Flex")
 	cmdFlexColor.PersistentFlags().BoolVarP(&blink, "blink", "", false, "Blink LED")
 	cmdFlexColor.PersistentFlags().IntVarP(&duration, "duration", "", 100, "Set duration of transition in milliseconds (use with --blink)")
 	cmdFlexColor.PersistentFlags().IntVarP(&repeats, "repeats", "", 10, "Number of repetitions (use with --blink)")
@@ -31,7 +29,7 @@ func init() {
 
 var cmdFlexColor = &cobra.Command{
 	Use:   "color",
-	Short: "Color a blinkstick flex",
+	Short: "Color a blinkstick flex: blink flex color [<color>] [--brightness=n] [--led=n] [--serial=s] [--duration=n] [--repeats=n] [--blink]",
 	Long: `Color a blinkstick flex:
 
 Set the same color for all leds with 50% brightness :
@@ -39,6 +37,11 @@ Set the same color for all leds with 50% brightness :
 
 Color led 0 and 7
  blink flex color red --led 0 --led 7
+
+Examples:
+ blink flex color powderblue
+ blink flex color powderblue --brightness 60 --blink --repeats 1
+ blink flex color ghostwhite --led 0 --led 2 --led 3 --led 5 --led 7 --led 11 --led 13 --led 17 --led 19 --led 23 --led 29 --led 31
 
 Turn off light:
   blink flex color black
