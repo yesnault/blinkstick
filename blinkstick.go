@@ -65,6 +65,7 @@ func List(opts ...ListFilter) []Blinkstick {
 
 	if len(opts) == 0 {
 		opts = append(opts, Nano{}.ListFilter)
+		opts = append(opts, Flex{}.ListFilter)
 		opts = append(opts, Strip{}.ListFilter)
 	}
 
